@@ -24,7 +24,7 @@ class SnakeGame:
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont('arial', 25)
         self.BLOCK_SIZE = 20
-        self.SPEED = s
+        self.SPEED = 10
 
         # Load images
         self.food_img = pygame.image.load('Resources/apple.png').convert_alpha()
@@ -135,15 +135,33 @@ class SnakeGame:
             elif (self.snake[b-1].x == self.snake[b].x) and (self.snake[b].x == self.snake[b+1].x):
                 self.display.blit(pygame.transform.rotate(self.snake_body_img, 90), snake_body_rect)
             elif (x_avg < self.snake[b].x) and (y_avg < self.snake[b].y):
-                self.display.blit(self.snake_curve_img, snake_body_rect)
-            elif (self.snake[b-1].x == self.snake[b].x) and (self.snake[b].x == self.snake[b+1].x):
-                self.display.blit(pygame.transform.rotate(self.snake_body_img, 90), snake_body_rect)
+                if self.snake[b].y - y_avg > self.BLOCK_SIZE:
+                    self.display.blit(pygame.transform.rotate(self.snake_curve_img, 90), snake_body_rect)
+                elif self.snake[b].x - x_avg > self.BLOCK_SIZE:
+                    self.display.blit(pygame.transform.rotate(self.snake_curve_img, 270), snake_body_rect)
+                else:
+                    self.display.blit(self.snake_curve_img, snake_body_rect)
             elif (x_avg < self.snake[b].x) and (y_avg > self.snake[b].y):
-                self.display.blit(pygame.transform.rotate(self.snake_curve_img, 90), snake_body_rect)
+                if y_avg - self.snake[b].y > self.BLOCK_SIZE:
+                    self.display.blit(self.snake_curve_img, snake_body_rect)
+                elif self.snake[b].x - x_avg > self.BLOCK_SIZE:
+                    self.display.blit(pygame.transform.rotate(self.snake_curve_img, 180), snake_body_rect)
+                else:
+                    self.display.blit(pygame.transform.rotate(self.snake_curve_img, 90), snake_body_rect)
             elif (x_avg > self.snake[b].x) and (y_avg > self.snake[b].y):
-                self.display.blit(pygame.transform.rotate(self.snake_curve_img, 180), snake_body_rect)
+                if y_avg - self.snake[b].y > self.BLOCK_SIZE:
+                    self.display.blit(pygame.transform.rotate(self.snake_curve_img, 270), snake_body_rect)
+                elif x_avg - self.snake[b].x > self.BLOCK_SIZE:
+                    self.display.blit(pygame.transform.rotate(self.snake_curve_img, 90), snake_body_rect)
+                else:
+                    self.display.blit(pygame.transform.rotate(self.snake_curve_img, 180), snake_body_rect)
             elif (x_avg > self.snake[b].x) and (y_avg < self.snake[b].y):
-                self.display.blit(pygame.transform.rotate(self.snake_curve_img, 270), snake_body_rect)
+                if self.snake[b].y - y_avg > self.BLOCK_SIZE:
+                    self.display.blit(pygame.transform.rotate(self.snake_curve_img, 180), snake_body_rect)
+                elif x_avg - self.snake[b].x > self.BLOCK_SIZE:
+                    self.display.blit(self.snake_curve_img, snake_body_rect)
+                else:
+                    self.display.blit(pygame.transform.rotate(self.snake_curve_img, 270), snake_body_rect)
 
         # Draw snake tail
         snake_tail_rect = pygame.Rect(self.snake[-1].x, self.snake[-1].y, self.BLOCK_SIZE, self.BLOCK_SIZE)
