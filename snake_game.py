@@ -24,7 +24,7 @@ class SnakeGame:
         self.clock = pygame.time.Clock()
         self.font = pygame.font.SysFont('arial', 25)
         self.BLOCK_SIZE = 20
-        self.SPEED = 10
+        self.SPEED = s
 
         # Load images
         self.food_img = pygame.image.load('Resources/apple.png').convert_alpha()
