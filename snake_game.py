@@ -166,13 +166,25 @@ class SnakeGame:
         # Draw snake tail
         snake_tail_rect = pygame.Rect(self.snake[-1].x, self.snake[-1].y, self.BLOCK_SIZE, self.BLOCK_SIZE)
         if (self.snake[-1].x < self.snake[-2].x) and (self.snake[-1].y == self.snake[-2].y):
-            self.display.blit(self.snake_tail_img, snake_tail_rect)
+            if self.snake[-2].x - self.snake[-1].x > self.BLOCK_SIZE:
+                self.display.blit(pygame.transform.rotate(self.snake_tail_img, 180), snake_tail_rect)
+            else:
+                self.display.blit(self.snake_tail_img, snake_tail_rect)
         elif (self.snake[-1].x == self.snake[-2].x) and (self.snake[-1].y > self.snake[-2].y):
-            self.display.blit(pygame.transform.rotate(self.snake_tail_img, 90), snake_tail_rect)
+            if self.snake[-1].y - self.snake[-2].y > self.BLOCK_SIZE:
+                self.display.blit(pygame.transform.rotate(self.snake_tail_img, 270), snake_tail_rect)
+            else:
+                self.display.blit(pygame.transform.rotate(self.snake_tail_img, 90), snake_tail_rect)
         elif (self.snake[-1].x > self.snake[-2].x) and (self.snake[-1].y == self.snake[-2].y):
-            self.display.blit(pygame.transform.rotate(self.snake_tail_img, 180), snake_tail_rect)
+            if self.snake[-1].x - self.snake[-2].x > self.BLOCK_SIZE:
+                self.display.blit(self.snake_tail_img, snake_tail_rect)
+            else:
+                self.display.blit(pygame.transform.rotate(self.snake_tail_img, 180), snake_tail_rect)
         elif (self.snake[-1].x == self.snake[-2].x) and (self.snake[-1].y < self.snake[-2].y):
-            self.display.blit(pygame.transform.rotate(self.snake_tail_img, 270), snake_tail_rect)
+            if self.snake[-2].y - self.snake[-1].y > self.BLOCK_SIZE:
+                self.display.blit(pygame.transform.rotate(self.snake_tail_img, 90), snake_tail_rect)
+            else:
+                self.display.blit(pygame.transform.rotate(self.snake_tail_img, 270), snake_tail_rect)
 
         # Draw food
         food_rect = pygame.Rect(self.food.x, self.food.y, self.BLOCK_SIZE, self.BLOCK_SIZE)
